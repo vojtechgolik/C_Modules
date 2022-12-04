@@ -26,6 +26,10 @@ DictionaryData parse(char* data){
 
 void init_dict(char* file){
     FILE* f = fopen(file, "r");
+    if(f == NULL){
+        printf("Could not load dictionary\n");
+        exit(1);
+    }
     char* buffer[255];
     int line = 0;
     data = malloc(0);
@@ -54,11 +58,12 @@ void free_dictionary(){
 }
 
 bool compare(char* original, char* to){
-    for(int i = 0; i < strlen(original); i ++ ){
-        if(to[i] != original[i])
-            return false;
-    }
-    return true;
+    char new[strlen(to) + 1];
+    strcpy(new, to);
+    new[strcspn(new, "\r\n")] = '\0';
+    new[strcspn(new, "\n")] = '\0';
+
+    return strcmp(original, new) == 0;
 }
 char* get_translation(const char* from){
     for(int i = 0; i < dictionary.dictionary_size; i++){
