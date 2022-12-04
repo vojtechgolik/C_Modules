@@ -14,8 +14,8 @@ DictionaryData parse(char* data){
     translation[strcspn(translation, "\n")] = '\0';
 
     DictionaryData d = {
-        .original = (char*) calloc(sizeof(char), strlen(original)),
-        .translation = (char*) calloc(sizeof(char) , strlen(original))
+        .original = (char*) calloc(sizeof(char), strlen(original)+1),
+        .translation = (char*) calloc(sizeof(char) , strlen(translation)+1)
         };
 
     strcpy(d.original, original);
